@@ -1,0 +1,4 @@
+Aufg. 1.:
+a)
+Paula's Berechnung ist schwer nachzuvollziehen, da sie statt eines Scripts die interaktive Python-Shell benutzt hat, die Variablen nicht funktionell benannt hat, und, da die Phyhon-Shell benutzt wurde, keine Kommentare vorhanden sind.
+
