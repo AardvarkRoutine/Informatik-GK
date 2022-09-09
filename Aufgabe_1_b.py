@@ -17,11 +17,11 @@ try:
 
     size_in_m = float(size_in_m)
     weight_in_kg = float(weight_in_kg)
-    # force-convert objects above to floats
-
+    # force-convert objects above to floats 
     bmi = round(weight_in_kg / (size_in_m*size_in_m), 2)
 except:
-    print("An error has occurred!")
+    print("An error has occurred, please restart!")
+    # show error message in case of exception
 
 else: 
     print("Ihr BMI lautet:", bmi,", gerundet auf 2 Nachkommastellen")
