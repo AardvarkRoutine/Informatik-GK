@@ -12,7 +12,7 @@ try:
 
     speed10 = speed / 10
     distance_till_reaction = speed10 * 3
-    breaking_distance = speed10*speed10
+    breaking_distance = speed10**2
     distance_till_hold = distance_till_reaction + breaking_distance
     # calculates the 3 values total asked for in task 2 via the given formulas
 

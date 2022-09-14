@@ -18,7 +18,7 @@ try:
     size_in_m = float(size_in_m)
     weight_in_kg = float(weight_in_kg)
     # force-convert objects above to floats 
-    bmi = round(weight_in_kg / (size_in_m*size_in_m), 2)
+    bmi = round(weight_in_kg / (size_in_m**2), 2)
 except:
     print("An error has occurred, please restart!")
     # show error message in case of exception
