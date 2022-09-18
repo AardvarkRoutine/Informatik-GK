@@ -19,6 +19,7 @@ try:
     weight_in_kg = float(weight_in_kg)
     # force-convert objects above to floats 
     bmi = round(weight_in_kg / (size_in_m**2), 2)
+    # Calculate BMI from pre-processed values
 except:
     print("An error has occurred, please restart!")
     # show error message in case of exception
@@ -26,3 +27,5 @@ except:
 else: 
     print("Ihr BMI lautet:", bmi,", gerundet auf 2 Nachkommastellen")
     # Output of calculated bmi
+
+    print("Nigger")
