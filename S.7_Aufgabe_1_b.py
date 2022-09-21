@@ -27,5 +27,4 @@ except:
 else: 
     print("Ihr BMI lautet:", bmi,", gerundet auf 2 Nachkommastellen")
     # Output of calculated bmi
-
-    print("Nigger")
+    
