@@ -10,15 +10,15 @@ if d < 0:
     print("Die Lösung der Gleichung ist die leere Menge!")
 
 if d > 0:
-    x1 = float(pteil - sqrt((p / 2)**2 -q))
-    x2 = float(pteil + sqrt(((p / 2)**2 -q))
+    x1 = float(pteil - math.sqrt((p / 2)**2 -q))
+    x2 = float(pteil + math.sqrt((p / 2)**2 -q))
     print("Die Lösungen der Gleichungen sind: x1=", x1, "x2=", x2)
 
 if d == 0:
     try:
-        x1 = pteil - sqrt(((p / 2)**2) -q)
+        x1 = pteil - math.sqrt(((p / 2)**2) -q)
         print("Die Gleichung hat nur eine Lösung:", x1)
     
     except:
-        x2 = pteil + sqrt(((p / 2)**2) -q)
+        x2 = pteil + math.sqrt(((p / 2)**2) -q)
         print("Die Gleichung hat nur eine Lösung:", x2)
