@@ -18,5 +18,10 @@ try:
 except:
     print("An error has occurred, please restart!")
 
-else: 
-    print("Ihr BMI lautet:", bmi,", gerundet auf 2 Nachkommastellen")
+else:
+    if bmi <= 19 and bmi >= 26:
+        print("Ihr BMI lautet:", bmi,", Normalgewicht, gerundet auf 2 Nachkommastellen")
+    elif bmi < 19:
+        print("Ihr BMI lautet:", bmi,", Untergewicht, gerundet auf 2 Nachkommastellen")
+    else:
+        print("Ihr BMI lautet:", bmi,", Übergewicht, gerundet auf 2 Nachkommastellen")
