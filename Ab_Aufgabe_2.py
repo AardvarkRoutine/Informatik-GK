@@ -3,7 +3,7 @@ age = input("Bitte geben sie ihr Alter in Jahren an!")
 name = input("Bitte geben sie ihren Vornamen an!")
 sirname = input("Bitte geben sie ihren Nachnamen an!")
 
-if age < 18:
+if age <= 18:
     print("Hallo,", name, "!")
 else:
     if "m" in age:
