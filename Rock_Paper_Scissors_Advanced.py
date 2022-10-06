@@ -15,3 +15,5 @@ while tie != False:
     elif player_input == beats[program_input]:
         print(program_input, "schlägt", player_input, ", das Programm gewinnt!")
         tie = False
+    else:
+        print("Das Programm und Sie haben dasselbe Zeichen gewählt! Die Runde wird wiederholt")
