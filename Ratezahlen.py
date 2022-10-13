@@ -1,25 +1,28 @@
 import random as r
-
-counter = 0
 repeat = True
+counter = 0
+while repeat == True:
+    gen()
+    guess_loop()
+    input_repeat()
+print("Danke fürs Spielen und bis zum nächsten Mal")
 
-while repeat != False:
-    min = int(input("Geben sie die untere Grenze des Zahlenbereichs ein!\n"))
-    max = int(input("Geben sie die obere Grenze des Zahlenbereichs ein!\n"))
+def gen():
+    min = int(input("Geben Sie die untere Grenze des Zahlenbereichs an!"))
+    max = int(input("Geben Sie die obere Gtenze des Zahlenbereichs ein!"))
     goal = r.randint(min, max)
-    user_in = int(input("Geben sie die von ihnen geratene Zahl ein!\n"))
-    
-    while user_in != goal:
-        if user_in < goal:
-            print("Die von ihnen geratene Zahl ist kleiner als die Trefferzahl!")
-        elif user_in > goal:
-            print("Die von ihnen geratene Zahl ist kleiner als die Trefferzahl!")
-        else:
-            print("Die von ihnen geratene Zahl liegt nicht im Zahlenbereich!")
-            counter = counter +1
-        user_in = int(input("Geben sie die von ihnen geratene Zahl ein!\n"))
-    print("Treffer! Sie haben ",counter, " Versuche benötigt!" )
-    repeat = input("Nochmal? (y, n\n")
-    if "n" in repeat:
+
+def guess_loop():
+    counter = 0
+    hit = int(input("Geben sie die von ihnen erratene Zahl ein!"))
+    while hit != goal:
+        print("Kein Treffer; nochmal!")
+        counter = counter +1
+    else:
+        print("Treffer! Sie haben im Zahlenbereich ", min," bis ", max,", ", counter, "Versuche gebraucht, um die Zahl zu erraten!")
+        counter = 0
+
+def input_repeat():
+    repeat_in = input("Wollen sie nochmal spielen? (y / n):\n")
+    if "n" in repeat_in:
         repeat = False
-        
