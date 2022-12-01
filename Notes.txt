@@ -1,7 +1,0 @@
----13.09.22---
-type(x) --> check variable type
-tasks: s.10 / Ü2 / Ü3
-
----14.09.22---
-log. Operators: and, or, not
-tasks: s.11 /Ü2
