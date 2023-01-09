@@ -1,8 +1,0 @@
-Aufg. 1.:
-a)
-Paula's Berechnung ist schwer nachzuvollziehen, da sie statt eines Scripts die interaktive Python-Shell benutzt hat, die Variablen nicht funktionell benannt hat, und, da die Phyhon-Shell benutzt wurde, keine Kommentare vorhanden sind.
-
-b)
-In Paula's Phython-Shell Sitzung ist a das Körpergewicht in kg, b die Größe in Metern, und c der vom Programm errechnete BMI.
-
-Der Vorteil bei funktionell benannten Variablen ist, dass Arbeitspartner, die agierende Fachkraft selbst oder andere Parteien den Code leichter nachvollziehen können, wobei auch extensives Kommentieren empfehlenswert ist.
