@@ -28,15 +28,26 @@ def state3():
     state = 3
 
 def reg():
-    while active == True:
+    global state
+    if active == True:
         state0()
         t.sleep(0.75)
+        tkw.update()
+    if active == True:
         state1()
         t.sleep(0.75)
+        tkw.update()
+    if active == True:
         state2()
         t.sleep(0.75)
+        tkw.update()
+    if active == True:
         state3()
         t.sleep(0.75)
+        tkw.update()
+    if active == True:
+        reg()
+    
 
 def shift():
     global state
@@ -57,7 +68,7 @@ def active_flipflop():
         active = False
     else:
         active = True
-    reg()
+        reg()
 
 tkw = Tk()
 tkw.title("Ampel")
