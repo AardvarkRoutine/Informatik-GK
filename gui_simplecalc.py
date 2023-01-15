@@ -109,7 +109,7 @@ buttonSqrt = Button(master=tkw, bg='#FFCFC9', text='2. Wurzel', command= buttonC
 buttonSqrt.place(x=10, y=110, width=135, height=50)
 buttonPot2 = Button(master=tkw, bg='#FFCFC9', text='^2', width='180', height = '40', command=buttonClicked(pot2))
 buttonPot2.place(x=155, y=110, width=135, height=50)
-buttonAns = Button(master=tkw, bg='#FFCFC9', text='Ans', command=ans())
+buttonAns = Button(master=tkw, bg='#FFCFC9', text='Ans', command=ans)
 buttonAns.place(x=10, y=170, width=280, height=50)
 
 tkw.mainloop()
