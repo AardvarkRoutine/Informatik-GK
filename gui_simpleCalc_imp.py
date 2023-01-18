@@ -7,7 +7,7 @@ tkw.geometry('500x230')
 
 entry1 = Entry(master=tkw, text = "0", bg='lightgray', width='135')
 entry1.place(x=10, y=10, width="135")
-entry2 = Entry(master=tkw, text = "2" bg='lightgray', width='135')
+entry2 = Entry(master=tkw, text = "2", bg='lightgray', width='135')
 entry2.place(x=155, y=10, width="135")
 def add():
     try:
@@ -77,8 +77,11 @@ def pot2():
     except:
         return "Error"
 
+def foo():
+    pass
+
 global clicked
-clicked = None
+clicked = foo()
 
 def click(func):
     global clicked
@@ -87,20 +90,21 @@ def click(func):
 def sol():
     global clicked
     solution = clicked()
-    ansHistory.insert(END, solution, "\n")
+    ansHistory.config(text=str(solution)
+    ansHistory.config(text="\n")
 
 ansHistory = Label(master=tkw, bg='lightgray', text='History')
 ansHistory.place(x=300, y=0, width=200, height=300)
 
-buttonAdd = Button(master=tkw, bg='#FFCFC9', text='+', command=clicked(add))
+buttonAdd = Button(master=tkw, bg='#FFCFC9', text='+', command=click(add))
 buttonAdd.place(x=10, y=50, width=62.5, height=50)
-buttonSub = Button(master=tkw, bg='#FFCFC9', text='-', command=clicked=(sub))
+buttonSub = Button(master=tkw, bg='#FFCFC9', text='-', command=click(sub))
 buttonSub.place(x=82.5, y=50, width=62.5, height=50)
-buttonMul = Button(master=tkw, bg='#FFCFC9', text='*', command=clicked=(mul))
+buttonMul = Button(master=tkw, bg='#FFCFC9', text='*', command=click(mul))
 buttonMul.place(x=155, y=50, width=62.5, height=50)
-buttonDiv = Button(master=tkw, bg='#FFCFC9', text='/', command=clicked(div))
+buttonDiv = Button(master=tkw, bg='#FFCFC9', text='/', command=click(div))
 buttonDiv.place(x=227.5, y=50, width=62.5, height=50)
-buttonSqrt = Button(master=tkw, bg='#FFCFC9', text='2. Wurzel', command=clicked(sqrt))
+buttonSqrt = Button(master=tkw, bg='#FFCFC9', text='2. Wurzel', command=click(sqrt))
 buttonSqrt.place(x=10, y=110, width=135, height=50)
 buttonPot2 = Button(master=tkw, bg='#FFCFC9', text='^2', width='180', height = '40', command =click(pot2))
 buttonPot2.place(x=155, y=110, width=135, height=50)
