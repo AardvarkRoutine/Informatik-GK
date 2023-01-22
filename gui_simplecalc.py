@@ -14,9 +14,6 @@ entry2.insert(0, '2')
 global clicked
 clicked = ""
 
-def aaugh():
-    pass
-
 def add():
     try:
         num1 = entry1.get()
@@ -92,6 +89,7 @@ def buttonClicked(op):
 def ans():
     global ans, clicked
     ans = clicked
+    ans()
     ansHistory.config(text = str(ans) + "\n")
 
 ansHistory = Label(master=tkw, bg='lightgray', text='History')
