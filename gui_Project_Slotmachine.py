@@ -15,5 +15,4 @@ labelBilanz.grid(row=0, column=3, padx=10, pady=10, sticky="se")
 
 startButton = Button(tkw, text="Start", font=("Arial", 20), bg="green", fg="white")
 
-
 tkw.mainloop()
