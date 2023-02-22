@@ -1,0 +1,30 @@
+from turtle import *
+color('red', 'yellow')
+begin_fill()
+while True:
+    forward(45)
+    left(135)
+    forward(45)
+    right(90)
+    forward(45)
+    left(135)
+    forward(45)
+    right(45)
+    forward(45)
+    left(90)
+    forward(45)
+    left(135)
+    forward(45)
+    right(90)
+    forward(45)
+    left(135)
+    forward(45)
+    right(45)
+    forward(45)
+    left(90)
+    forward(45)
+    if abs(pos()) < 1:
+        break
+end_fill()
+done()
+
