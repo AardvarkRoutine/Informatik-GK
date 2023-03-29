@@ -67,5 +67,6 @@ for button_text in button_list:
 
 equal_button = tk.Button(button_frame,text="=",width=5,height=2,command=calculate)
 equal_button.grid(row=4,column=3)
+print(str(root.geometry))
 
 root.mainloop()

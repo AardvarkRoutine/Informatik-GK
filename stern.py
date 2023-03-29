@@ -1,4 +1,5 @@
 from turtle import *
+speed(0)
 color('red', 'yellow')
 begin_fill()
 while True:
