@@ -13,7 +13,7 @@ if not exists:
     (105, 'David Lee', 3),
     (106, 'Emily Davis', 3),
     (107, 'Tom Wilson', 2)
-]
+    ]
 
     # insert the data into the patients table
     for patient in patients_data:
@@ -157,3 +157,7 @@ def add_patient_file(patientid, filename):
     # Adds a file to a patient 
     cur.execute('INSERT INTO patient_files (patientid, filename) VALUES (?, ?)', (patientid, filename))
     con.commit()
+
+# print the entire database
+def print_database():
+    print(cur.fetchall())
