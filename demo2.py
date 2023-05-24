@@ -37,7 +37,6 @@ def dreieck(x, y):
     pygame.draw.polygon(display, green, ((x, y + 75), (x + 50, y), (x - 50, y)), 0)
 
 
-
 while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
