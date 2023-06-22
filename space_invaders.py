@@ -47,7 +47,14 @@ game_over = False
 defender_projectiles = []
 attackers = []
 
+# Load and play the audio track
+pygame.mixer.music.load("audio.mp3")
+pygame.mixer.music.set_volume(0.1)  # Set the volume (adjust as needed)
+pygame.mixer.music.play(-1)  # Loop the audio track
+
 def game_over_screen():
+    pygame.mixer.music.stop()  # Stop the audio track
+
     Fnt = pygame.font.SysFont("Arial", 50)
     game_over_image = pygame.image.load("game_over.png").convert_alpha()
     display.blit(game_over_image, (display_width // 2 - game_over_image.get_width() // 2, display_height // 2 - game_over_image.get_height() // 2))
@@ -82,6 +89,8 @@ def check_projectile_collision():
         attackers.remove(attacker)
 
     if len(attackers) == 0:
+        pygame.mixer.music.stop()  # Stop the audio track
+
         # Display win screen
         Fnt = pygame.font.SysFont("Arial", 50)
         win_text = Fnt.render("You Win!", True, (0, 255, 0))
