@@ -101,6 +101,13 @@ def check_projectile_collision():
         pygame.quit()
         sys.exit()
 
+def move_defender(direction):
+    defender_rect.x += direction * defender_speed
+    if defender_rect.left < 0:
+        defender_rect.left = 0
+    elif defender_rect.right > display_width:
+        defender_rect.right = display_width
+
 # Create attackers
 for row in range(num_rows):
     for col in range(num_cols):
@@ -118,10 +125,13 @@ while True:
             pygame.quit()
             sys.exit()
 
-    keys = pygame.key.get_pressed()
-    x_direction = keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                move_defender(-1)
+            elif event.key == pygame.K_RIGHT:
+                move_defender(1)
 
-    defender_rect.x += x_direction * defender_speed
+    keys = pygame.key.get_pressed()
 
     display.fill(black)
 
@@ -145,7 +155,12 @@ while True:
     defender_projectiles = [projectile_rect for projectile_rect in defender_projectiles if projectile_rect.y > 0]
 
     for attacker in attackers:
-        if attacker['rect'].colliderect(rect1) or attacker['rect'].colliderect(rect2) or attacker['rect'].colliderect(rect3):
+        if (
+            attacker['rect'].colliderect(rect1)
+            or attacker['rect'].colliderect(rect2)
+            or attacker['rect'].colliderect(rect3)
+            or not bounding_box.contains(attacker['rect'])
+        ):
             game_over = True
             break
 
