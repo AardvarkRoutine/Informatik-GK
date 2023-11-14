@@ -15,6 +15,19 @@ black = (0, 0, 0)
 green = (0, 255, 0)
 clock = pygame.time.Clock()
 
+# Variables
+num_cols = 5
+num_rows = 2
+attacker_width = 40
+attacker_height = 40
+rectangle_spacing = 60
+attacker_speed = 40
+attacker_direction = 1
+movement_interval = 45
+projectile_speed = 10
+projectile_cooldown = 45  # Cooldown in frames
+defender_speed = 5
+
 defender_image = pygame.image.load("defender.png").convert_alpha()
 defender_rect = defender_image.get_rect()
 defender_rect.center = (display_width // 2, display_height - 50)
@@ -22,20 +35,28 @@ defender_rect.center = (display_width // 2, display_height - 50)
 attacker_image = pygame.image.load("attacker.png").convert_alpha()
 attacker_rect = attacker_image.get_rect()
 
-attacker_width = attacker_rect.width
-attacker_height = attacker_rect.height
-
-num_rows = 3
-num_cols = 5
-
 rectangle_width = 160
 rectangle_height = 20
-rectangle_spacing = 60
+rect1 = pygame.Rect((display_width - (rectangle_width * 3 + rectangle_spacing * 2)) // 2, display_height - 200, rectangle_width, rectangle_height)
+rect2 = pygame.Rect(rect1.right + rectangle_spacing, display_height - 200, rectangle_width, rectangle_height)
+rect3 = pygame.Rect(rect2.right + rectangle_spacing, display_height - 200, rectangle_width, rectangle_height)
+
+bounding_box = pygame.Rect(0, 0, display_width, display_height)
+game_over = False
+
+defender_projectiles = []
+attackers = []
+
+# Load and play the audio track
+pygame.mixer.music.load("audio.mp3")
+pygame.mixer.music.set_volume(0.1)  # Set the volume (adjust as needed)
+pygame.mixer.music.play(-1)  # Loop the audio track
 
 def game_over_screen():
+    pygame.mixer.music.stop()  # Stop the audio track
+
     Fnt = pygame.font.SysFont("Arial", 50)
     game_over_image = pygame.image.load("game_over.png").convert_alpha()
-    #display it in the middle of the screen
     display.blit(game_over_image, (display_width // 2 - game_over_image.get_width() // 2, display_height // 2 - game_over_image.get_height() // 2))
     text = Fnt.render("Game Over", True, (255, 0, 0))
     text_rect = text.get_rect()
@@ -46,25 +67,57 @@ def game_over_screen():
     pygame.quit()
     sys.exit()
 
-attackers = []
+def check_projectile_collision():
+    global defender_projectiles, attackers
+
+    attackers_to_remove = []
+    projectiles_to_remove = []
+
+    for projectile_rect in defender_projectiles:
+        for attacker in attackers:
+            if attacker['rect'].colliderect(projectile_rect):
+                attacker['health'] -= 1
+                if attacker['health'] == 0:
+                    projectiles_to_remove.append(projectile_rect)
+                    attackers_to_remove.append(attacker)
+
+    for projectile_rect in projectiles_to_remove:
+        if projectile_rect in defender_projectiles:
+            defender_projectiles.remove(projectile_rect)
+
+    for attacker in attackers_to_remove:
+        attackers.remove(attacker)
+
+    if len(attackers) == 0:
+        pygame.mixer.music.stop()  # Stop the audio track
+
+        # Display win screen
+        Fnt = pygame.font.SysFont("Arial", 50)
+        win_text = Fnt.render("You Win!", True, (0, 255, 0))
+        text_rect = win_text.get_rect(center=(display_width // 2, display_height // 2))
+        display.blit(win_text, text_rect)
+        pygame.display.update()
+        pygame.time.wait(2000)
+        pygame.quit()
+        sys.exit()
+
+def move_defender(direction):
+    defender_rect.x += direction * defender_speed
+    if defender_rect.left < 0:
+        defender_rect.left = 0
+    elif defender_rect.right > display_width:
+        defender_rect.right = display_width
+
+# Create attackers
 for row in range(num_rows):
     for col in range(num_cols):
         x = (col * (attacker_width + rectangle_spacing)) + ((display_width - (num_cols * (attacker_width + rectangle_spacing))) // 2)
-        y = 100 + row * (attacker_height + rectangle_spacing)  # Adjusted y position
+        y = row * (attacker_height + rectangle_spacing)
         attacker_rect = attacker_image.get_rect(topleft=(x, y))
-        attackers.append(attacker_rect)
+        attackers.append({'rect': attacker_rect, 'health': 1})
 
-attacker_speed = 1
-attacker_direction = 1
-
-rect1 = pygame.Rect((display_width - (rectangle_width * 3 + rectangle_spacing * 2)) // 2, display_height - 200, rectangle_width, rectangle_height)
-rect2 = pygame.Rect(rect1.right + rectangle_spacing, display_height - 200, rectangle_width, rectangle_height)
-rect3 = pygame.Rect(rect2.right + rectangle_spacing, display_height - 200, rectangle_width, rectangle_height)
-
-bounding_box = pygame.Rect(0, 0, display_width, display_height)
-
-defender_speed = 5
-game_over = False
+frame_counter = 0
+projectile_cooldown_counter = 0
 
 while True:
     for event in pygame.event.get():
@@ -72,15 +125,18 @@ while True:
             pygame.quit()
             sys.exit()
 
-    keys = pygame.key.get_pressed()
-    x_direction = keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                move_defender(-1)
+            elif event.key == pygame.K_RIGHT:
+                move_defender(1)
 
-    defender_rect.x += x_direction * defender_speed
+    keys = pygame.key.get_pressed()
 
     display.fill(black)
 
-    for attacker_rect in attackers:
-        display.blit(attacker_image, attacker_rect)
+    for attacker in attackers:
+        display.blit(attacker_image, attacker['rect'])
 
     pygame.draw.rect(display, green, rect1)
     pygame.draw.rect(display, green, rect2)
@@ -88,22 +144,23 @@ while True:
 
     display.blit(defender_image, defender_rect)
 
-    collision = False
-    for x in range(defender_rect.width):
-        for y in range(defender_rect.height):
-            defender_pixel = defender_image.get_at((x, y))
-            if defender_pixel.a != 0 and not bounding_box.collidepoint(defender_rect.x + x, defender_rect.y + y):
-                collision = True
-                break
-        if collision:
-            break
+    for projectile_rect in defender_projectiles:
+        pygame.draw.rect(display, (255, 255, 255), projectile_rect)
 
-    if collision:
-        defender_rect.clamp_ip(bounding_box)
+    check_projectile_collision()
 
-    # Check for wall collision
-    for attacker_rect in attackers:
-        if attacker_rect.colliderect(rect1) or attacker_rect.colliderect(rect2) or attacker_rect.colliderect(rect3):
+    for projectile_rect in defender_projectiles:
+        projectile_rect.y -= projectile_speed
+
+    defender_projectiles = [projectile_rect for projectile_rect in defender_projectiles if projectile_rect.y > 0]
+
+    for attacker in attackers:
+        if (
+            attacker['rect'].colliderect(rect1)
+            or attacker['rect'].colliderect(rect2)
+            or attacker['rect'].colliderect(rect3)
+            or not bounding_box.contains(attacker['rect'])
+        ):
             game_over = True
             break
 
@@ -111,14 +168,28 @@ while True:
         game_over_screen()
         break
 
-    # Move attackers and reverse direction if they touch the wall
-    for attacker_rect in attackers:
-        attacker_rect.x += attacker_speed * attacker_direction
+    frame_counter += 1
+    if frame_counter >= movement_interval:
+        frame_counter = 0
+        move_down = False
+        for attacker in attackers:
+            attacker['rect'].x += attacker_speed * attacker_direction
 
-        if attacker_rect.left <= 0 or attacker_rect.right >= display_width:
+            if attacker['rect'].left <= 0 or attacker['rect'].right >= display_width:
+                move_down = True
+
+        if move_down:
             attacker_direction *= -1
-            for a in attackers:
-                a.y += attacker_height
+            for attacker in attackers:
+                attacker['rect'].y += attacker_height + rectangle_spacing
+
+    if keys[pygame.K_SPACE] and projectile_cooldown_counter == 0:
+        projectile_rect = pygame.Rect(defender_rect.centerx - 2, defender_rect.top, 4, 8)
+        defender_projectiles.append(projectile_rect)
+        projectile_cooldown_counter = projectile_cooldown
+
+    if projectile_cooldown_counter > 0:
+        projectile_cooldown_counter -= 1
 
     pygame.display.update()
     clock.tick(60)
